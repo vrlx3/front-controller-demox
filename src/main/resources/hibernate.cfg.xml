@@ -12,7 +12,7 @@
         <property name="hibernate.connection.username">postgres</property>
         <!-- Keep in mind your password may be different -->
         <property name="hibernate.connection.password">postgres</property>
-        <property name="hibernate.default_schema">sophiag</property>
+        <property name="hibernate.default_schema">viralb</property>
   
         <!-- SQL dialect -->
         <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
