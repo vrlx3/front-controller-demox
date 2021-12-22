@@ -61,13 +61,6 @@ public class RequestHelper {
 			out.println("No user found, sorry");
 			response.setStatus(204); 
 		}
-
-		
-		// call the service layer...which calls the dao layer
-		
-		// return some response (or redirect the user) if the employee object exists in the database.
-		
-		
 	}
 	
 	public static void processEmployees(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -84,15 +77,16 @@ public class RequestHelper {
 		// 4. Call the Print Writer to write it out to the client (browser) in the response body
 		PrintWriter out = response.getWriter();
 		out.println(jsonString);
-		
-		
 	}
 	
 	
 	public static void processError(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-	
-		
-		
+	// If something goes wrong, redirect the user to a custom 404 page 
+		request.getRequestDispatcher("error.html").forward(request, response);
+		/**
+		 * forward() differs from sendRedirect() in that it DOES NOT produce a new request, but rather
+		 * just forwards the same request to a new resource(maintaining the URL).
+		 */
 		
 	}
 	
