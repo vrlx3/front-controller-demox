@@ -35,8 +35,13 @@ public class FrontController extends HttpServlet {
 			// Call some method that processes a 404 error
 			RequestHelper.processError(request, response);
 			break;
+		case "employees":
+			// This method will return all users from DB to the client
+			RequestHelper.processEmployees(request, response);
+			break;
 		default:
 			// Call some method that processes a 404 error
+			RequestHelper.processError(request, response);
 			break;
 		}
 
