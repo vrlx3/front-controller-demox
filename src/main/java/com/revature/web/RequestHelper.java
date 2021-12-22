@@ -1,12 +1,15 @@
 package com.revature.web;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 
@@ -28,6 +31,37 @@ public class RequestHelper {
 	public static void processLogin(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 	
 		// extract the parameters from the HttpServlerRequest (username & password)
+		// We're reading the username and password parameter values
+		
+		String username = request.getParameter("username");
+		String password = request.getParameter("password");
+		
+		logger.info("User attempted to login with username " + username);
+		
+		// call the confirmLogin() method with those values
+		Employee e = eserv.confirmLogin(username, password);
+		
+		// IF the user is not null, save the user to the session, and print the user's info to the client using print writer
+		if (e != null ) {
+			
+			// grab the sessiona dn add the user to it
+			HttpSession session = request.getSession();
+			session.setAttribute("the-user", e); // binding the retrieved user object to the session and giving it the key "the-user"
+			
+			// print the logged in user to the screen
+			PrintWriter out = response.getWriter();
+			response.setContentType("text/html");
+			
+			// conver the object with Jackson object mapper and print it out
+			out.println(om.writeValueAsString(e));
+		} else {
+			// if the reutrned object is null return a HTTP status called No Content Status
+			PrintWriter out = response.getWriter();
+			response.setContentType("text/html");
+			out.println("No user found, sorry");
+			response.setStatus(204); 
+		}
+
 		
 		// call the service layer...which calls the dao layer
 		
